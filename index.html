@@ -1,0 +1,722 @@
+<html>
+<head>
+
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	 
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<!-- web3.js 1.0.0 -->    
+	<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+
+  <title>Supply Chain DApp</title>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+   <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body class="container">
+	<br>
+<img src="image/haitu.png" alt="Haitwik Supply Chain Management DApp">
+
+<br><br>
+<div class="tab"><center>
+  <button class="tablinks" onclick="openTab(event, 'reghand')">Register Handler</button>
+  <button class="tablinks" onclick="openTab(event, 'regprod')">Register Product</button>
+  <button class="tablinks" onclick="openTab(event, 'addchk')">Update Status</button>
+  <button class="tablinks" onclick="openTab(event, 'trkprod')">Track Product</button>
+  <button class="tablinks" onclick="openTab(event, 'gethand')"> Get Handler</button>
+  <button class="tablinks" onclick="openTab(event, 'getallhand')">List All Handlers</button>
+  <button class="tablinks" onclick="openTab(event, 'getallprod')">List All Products</button>
+</div></center>
+
+<div id="reghand" class="tabcontent">
+	<h3>Register Handler</h3>
+	    <table class="table">
+	      <tbody>
+		<tr>
+		  <td>Address of Handler:</td>
+		  <td><input type="text" id="ethadd" maxlength="42"/></td>
+		</tr>
+		<tr>
+		  <td>Name:</td>
+		  <td><input type="text" id="hname" maxlength="32" /></td>
+		</tr>
+		<tr>
+		  <td>Location:</td>
+		  <td><input type="text" id="haddr" maxlength="18" /></td>
+		</tr>
+
+		<tr>
+		  <td>Status of TX:</td>
+		  <td><p id="addhandstat"><p></td>
+		</tr>
+	      </tbody>
+	    </table>
+	<center><a href="#" onclick="registerHandler()" class="btn btn-primary">Register</a></center>
+</div>
+<div id="regprod" class="tabcontent">
+	<h3>Register Product</h3>
+	    <table class="table">
+	      <tbody>
+		<tr>
+		  <td>Unique Product ID:</td>
+		  <td><input type="text" id="uid" maxlength="32" /></td>
+		</tr>
+		<tr>
+		  <td>Product Name:</td>
+		  <td><input type="text" id="name" maxlength="21" /></td>
+		</tr>
+		<tr>
+		  <td>Action Taken:</td>
+		  <td><input type="text" id="action" maxlength="19" /></td>
+		</tr>
+		<tr>
+		  <td>Latitude:</td>
+		  <td><input type="text" id="lat" /></td>
+		</tr>
+		<tr>
+		  <td>Longitude:</td>
+		  <td><input type="text" id="lon" /></td>
+		</tr>
+		<tr>
+		  <td>Status of TX:</td>
+		  <td><p id="addprodstat"><p></td>
+		</tr>
+	      </tbody>
+	    </table>
+	  <center><a href="#" onclick="registerProduct()" class="btn btn-primary">Register</a></center>
+</div>
+<div id="addchk" class="tabcontent">
+	<h3>Update Product Stage</h3>
+	    <table class="table">
+	      <tbody>
+		<tr>
+		  <td>Unique Product ID:</td>
+		  <td><input type="text" id="cuid" maxlength="32" /></td>
+		</tr>
+		<tr>
+		  <td>Action:</td>
+		  <td><input type="text" id="caction" maxlength="19" /></td>
+		</tr>
+		<tr>
+		  <td>Latitude:</td>
+		  <td><input type="text" id="clat" /></td>
+		</tr>
+		<tr>
+		  <td>Longitude:</td>
+		  <td><input type="text" id="clon" /></td>
+		</tr>
+		<tr>
+		  <td>Status of TX:</td>
+		  <td><p id="addchkpnt"><p></td>
+		</tr>
+	      </tbody>
+	    </table>
+	<center><a href="#" onclick="addCheckpoint()" class="btn btn-primary">Update</a></center>
+</div>
+<div id="trkprod" class="tabcontent">
+	<h3>Track Product</h3>
+	    <table class="table">
+	      <tbody>
+		<tr>
+		  <td>Unique ID:</td>
+		  <td><input type="text" id="tuid" maxlength="32" /></td>
+		</tr>
+	      </tbody>
+	    </table>
+	<center><a href="#" onclick="trackProduct()" class="btn btn-primary">Track Product</a></center>
+  
+  <br> 
+
+  <table>
+    <tr>
+      <th>Handler</th>
+      <th>Stage</th>
+      <th>Latitudes</th>
+      <th>Longitudes</th>
+      <th>Action Date</th>
+    </tr>
+    <tr>
+      <td><div id="chkpnts0a"></div></td>
+      <td><div id="chkpnts0b"></div></td>
+      <td><div id="chkpnts0c"></div></td>
+      <td><div id="chkpnts0d"></div></td>
+      <td><div id="chkpnts0e"></div></td>
+    </tr>
+    <tr>
+      <td><div id="chkpnts1a"></div></td>
+      <td><div id="chkpnts1b"></div></td>
+      <td><div id="chkpnts1c"></div></td>
+      <td><div id="chkpnts1d"></div></td>
+      <td><div id="chkpnts1e"></div></td>
+    </tr>
+      <tr>
+        <td><div id="chkpnts2a"></div></td>
+        <td><div id="chkpnts2b"></div></td>
+        <td><div id="chkpnts2c"></div></td>
+        <td><div id="chkpnts2d"></div></td>
+        <td><div id="chkpnts2e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts3a"></div></td>
+        <td><div id="chkpnts3b"></div></td>
+        <td><div id="chkpnts3c"></div></td>
+        <td><div id="chkpnts3d"></div></td>
+        <td><div id="chkpnts3e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts4a"></div></td>
+        <td><div id="chkpnts4b"></div></td>
+        <td><div id="chkpnts4c"></div></td>
+        <td><div id="chkpnts4d"></div></td>
+        <td><div id="chkpnts4e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts5a"></div></td>
+        <td><div id="chkpnts5b"></div></td>
+        <td><div id="chkpnts5c"></div></td>
+        <td><div id="chkpnts5d"></div></td>
+        <td><div id="chkpnts5e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts6a"></div></td>
+        <td><div id="chkpnts6b"></div></td>
+        <td><div id="chkpnts6c"></div></td>
+        <td><div id="chkpnts6d"></div></td>
+        <td><div id="chkpnts6e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts7a"></div></td>
+        <td><div id="chkpnts7b"></div></td>
+        <td><div id="chkpnts7c"></div></td>
+        <td><div id="chkpnts7d"></div></td>
+        <td><div id="chkpnts7e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts8a"></div></td>
+        <td><div id="chkpnts8b"></div></td>
+        <td><div id="chkpnts8c"></div></td>
+        <td><div id="chkpnts8d"></div></td>
+        <td><div id="chkpnts8e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts9a"></div></td>
+        <td><div id="chkpnts9b"></div></td>
+        <td><div id="chkpnts9c"></div></td>
+        <td><div id="chkpnts9d"></div></td>
+        <td><div id="chkpnts9e"></div></td>
+      </tr>
+      <tr>
+        <td><div id="chkpnts10a"></div></td>
+        <td><div id="chkpnts10b"></div></td>
+        <td><div id="chkpnts10c"></div></td>
+        <td><div id="chkpnts10d"></div></td>
+        <td><div id="chkpnts10e"></div></td>
+      </tr>
+  </table>  
+
+	<center><div id="map" style="width: 500px; height: 400px;"></div></center>
+</div>
+<div id="gethand" class="tabcontent">
+	<h3>Get Handler Info</h3>
+	    <table class="table">
+	      <tbody>
+		<tr>
+		  <td>Handler Address:</td>
+		  <td><input type="text" id="handadd" maxlength="42"/></td>
+		</tr>
+	      </tbody>
+	    </table>
+	<center><a href="#" onclick="getHandler()" class="btn btn-primary">Get Handler</a></center>
+	<div id="gethandinfo"></div>
+</div>
+<div id="getallhand" class="tabcontent">
+	<h3>All Handlers Info</h3>
+	<body class="container">
+  <!-- <center><a href="#" onclick="getAllHandlers()" class="btn btn-primary">Fetch All Handlers</a></center> -->
+  <center><a href="#" onclick="getAllHandlers()" class="btn btn-primary">Fetch All Handlers</a></center>
+	<br>
+  <div id="getallhandinfo"></div>
+
+</div>
+<div id="getallprod" class="tabcontent">
+	<h3>All Products Info</h3>
+	<body class="container">
+  <center><a href="#" onclick="getAllProducts()" class="btn btn-primary">Fetch All Products</a></center>
+  <br>
+  
+<div id="getallprodinfo"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<Google Maps Javascript API token>"
+  type="text/javascript"></script>
+
+  
+<script>
+
+  function openTab(evt, tabname) {
+      // Declare all variables
+      var i, tabcontent, tablinks;
+  
+      // Get all elements with class="tabcontent" and hide them
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+  
+      // Get all elements with class="tablinks" and remove the class "active"
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+  
+      // Show the current tab, and add an "active" class to the button that opened the tab
+      document.getElementById(tabname).style.display = "block";
+      evt.currentTarget.className += " active";
+  }
+  
+  if (typeof web3 !== "undefined") {
+    web3 = new Web3(web3.currentProvider);
+  } else {
+    web3 = new Web3(new Web3.providers.HttpProvider("https://rinkeby.infura.io/v3/0dd1a07667514dcc9223ba1bd608ce63"));
+  }
+  
+  var abi = [
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "_from",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "_to",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "handlerAddress",
+            "type": "address"
+          },
+          {
+            "name": "handlerName",
+            "type": "bytes32"
+          },
+          {
+            "name": "handlerInfo",
+            "type": "bytes32"
+          }
+        ],
+        "name": "addHandler",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "uid",
+            "type": "bytes32"
+          },
+          {
+            "name": "productInfo",
+            "type": "bytes32"
+          },
+          {
+            "name": "checkpointInfo",
+            "type": "bytes32"
+          },
+          {
+            "name": "lat",
+            "type": "uint256"
+          },
+          {
+            "name": "lon",
+            "type": "uint256"
+          }
+        ],
+        "name": "addProduct",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "uid",
+            "type": "bytes32"
+          },
+          {
+            "name": "checkpointInfo",
+            "type": "bytes32"
+          },
+          {
+            "name": "lat",
+            "type": "uint256"
+          },
+          {
+            "name": "lon",
+            "type": "uint256"
+          }
+        ],
+        "name": "addCheckpoint",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "uid",
+            "type": "bytes32"
+          }
+        ],
+        "name": "getProduct",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32"
+          },
+          {
+            "name": "",
+            "type": "address[]"
+          },
+          {
+            "name": "",
+            "type": "bytes32[]"
+          },
+          {
+            "name": "",
+            "type": "uint256[]"
+          },
+          {
+            "name": "",
+            "type": "uint256[]"
+          },
+          {
+            "name": "",
+            "type": "uint256[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "addressOfHandler",
+            "type": "address"
+          }
+        ],
+        "name": "getHandler",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32"
+          },
+          {
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getAllProducts",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bytes32[]"
+          },
+          {
+            "name": "",
+            "type": "bytes32[]"
+          },
+          {
+            "name": "",
+            "type": "uint256[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getAllHandlers",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address[]"
+          },
+          {
+            "name": "",
+            "type": "bytes32[]"
+          },
+          {
+            "name": "",
+            "type": "bytes32[]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ];
+    
+    var contractAddress = "0xcbb658990af2a7d0152ddc2b59b88546b83f4ee0";
+  
+    async function init() {
+      supplyChain = await new web3.eth.Contract(abi, contractAddress);
+      var accounts = await web3.eth.getAccounts();
+      console.log(accounts);
+      console.log(supplyChain);
+      web3.eth.defaultAccount = accounts[0];
+    }
+    init();
+  
+    async function registerHandler() {
+      var ethadd = document.getElementById('ethadd').value;
+      var hname = document.getElementById('hname').value;
+      var haddr = document.getElementById('haddr').value;
+  
+      supplyChain.methods.addHandler(ethadd, web3.utils.fromAscii(hname), web3.utils.fromAscii(haddr)).send({from: web3.eth.defaultAccount}).on('receipt', function(receipt) {
+        console.log(receipt);
+        document.getElementById("addhandstat").innerHTML = "Sent TX#: " + receipt.blockHash;
+      }); 
+    }
+  
+    async function registerProduct() {
+      var uid = document.getElementById('uid').value;
+      var name = document.getElementById('name').value;
+      var action = document.getElementById('action').value;
+  
+      supplyChain.methods.addProduct(web3.utils.fromAscii(uid), web3.utils.fromAscii(name), web3.utils.fromAscii(action), document.getElementById('lat').value, document.getElementById('lon').value).send({from: web3.eth.defaultAccount}).on('receipt', function(receipt) {
+        console.log(receipt);
+        document.getElementById("addprodstat").innerHTML = "Sent TX#: " + receipt.blockHash;
+        console.log(receipt.blockHash);
+      }); 
+    }
+  
+    async function addCheckpoint() {
+      var cuid = document.getElementById('cuid').value;
+      var caction = document.getElementById('caction').value;
+  
+      supplyChain.methods.addCheckpoint(web3.utils.fromAscii(cuid), web3.utils.fromAscii(caction), document.getElementById('lat').value, document.getElementById('lon').value).send({from: web3.eth.defaultAccount}).on('receipt', function(receipt) {
+        console.log(receipt);
+        document.getElementById("addchkpnt").innerHTML = "Sent TX#: " + receipt.blockHash;
+      }); 
+    }
+  
+    async function trackProduct() {
+      var tuid = document.getElementById('tuid').value;
+  
+      supplyChain.methods.getProduct(web3.utils.fromAscii(tuid)).call().then(function(data) {
+        console.log("data: ", data);
+        numOfStages = data[1].length;
+        console.log("No.of Stages: ", numOfStages);
+
+        var date0 = new Date((data[5][0])/1000000).toUTCString();
+        var date1 = new Date((data[5][1])/1000000).toUTCString();
+        var date2 = new Date((data[5][2])/1000000).toUTCString();
+        var date3 = new Date((data[5][3])/1000000).toUTCString();
+        var date4 = new Date((data[5][4])/1000000).toUTCString();
+        var date5 = new Date((data[5][5])/1000000).toUTCString();
+        var date6 = new Date((data[5][6])/1000000).toUTCString();
+        var date7 = new Date((data[5][7])/1000000).toUTCString();
+        var date8 = new Date((data[5][8])/1000000).toUTCString();
+        var date9 = new Date((data[5][9])/1000000).toUTCString();
+        var date10 = new Date((data[5][10])/1000000).toUTCString();
+
+        document.getElementById("chkpnts0a").innerHTML = cleanPadding(data[1][0]);
+        document.getElementById("chkpnts0b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][0]));
+        document.getElementById("chkpnts0c").innerHTML = cleanPadding(data[3][0]);
+        document.getElementById("chkpnts0d").innerHTML = cleanPadding(data[4][0]);
+        document.getElementById("chkpnts0e").innerHTML = date0;
+
+        document.getElementById("chkpnts1a").innerHTML = cleanPadding(data[1][1]);
+        document.getElementById("chkpnts1b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][1]));
+        document.getElementById("chkpnts1c").innerHTML = cleanPadding(data[3][1]);
+        document.getElementById("chkpnts1d").innerHTML = cleanPadding(data[4][1]);
+        document.getElementById("chkpnts1e").innerHTML = date1;
+
+        document.getElementById("chkpnts2a").innerHTML = cleanPadding(data[1][2]);
+        document.getElementById("chkpnts2b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][2]));
+        document.getElementById("chkpnts2c").innerHTML = cleanPadding(data[3][2]);
+        document.getElementById("chkpnts2d").innerHTML = cleanPadding(data[4][2]);
+        document.getElementById("chkpnts2e").innerHTML = date2;
+
+        document.getElementById("chkpnts3a").innerHTML = cleanPadding(data[1][3]);
+        document.getElementById("chkpnts3b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][3]));
+        document.getElementById("chkpnts3c").innerHTML = cleanPadding(data[3][3]);
+        document.getElementById("chkpnts3d").innerHTML = cleanPadding(data[4][3]);
+        document.getElementById("chkpnts3e").innerHTML = date3;
+
+        document.getElementById("chkpnts4a").innerHTML = cleanPadding(data[1][4]);
+        document.getElementById("chkpnts4b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][4]));
+        document.getElementById("chkpnts4c").innerHTML = cleanPadding(data[3][4]);
+        document.getElementById("chkpnts4d").innerHTML = cleanPadding(data[4][4]);
+        document.getElementById("chkpnts4e").innerHTML = date4;
+
+        document.getElementById("chkpnts5a").innerHTML = cleanPadding(data[1][5]);
+        document.getElementById("chkpnts5b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][5]));
+        document.getElementById("chkpnts5c").innerHTML = cleanPadding(data[3][5]);
+        document.getElementById("chkpnts5d").innerHTML = cleanPadding(data[4][5]);
+        document.getElementById("chkpnts5e").innerHTML = date5;
+
+        document.getElementById("chkpnts6a").innerHTML = cleanPadding(data[1][6]);
+        document.getElementById("chkpnts6b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][6]));
+        document.getElementById("chkpnts6c").innerHTML = cleanPadding(data[3][6]);
+        document.getElementById("chkpnts6d").innerHTML = cleanPadding(data[4][6]);
+        document.getElementById("chkpnts6e").innerHTML = date6;
+
+        document.getElementById("chkpnts7a").innerHTML = cleanPadding(data[1][7]);
+        document.getElementById("chkpnts7b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][7]));
+        document.getElementById("chkpnts7c").innerHTML = cleanPadding(data[3][7]);
+        document.getElementById("chkpnts7d").innerHTML = cleanPadding(data[4][7]);
+        document.getElementById("chkpnts7e").innerHTML = date7;
+
+        document.getElementById("chkpnts8a").innerHTML = cleanPadding(data[1][8]);
+        document.getElementById("chkpnts8b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][8]));
+        document.getElementById("chkpnts8c").innerHTML = cleanPadding(data[3][8]);
+        document.getElementById("chkpnts8d").innerHTML = cleanPadding(data[4][8]);
+        document.getElementById("chkpnts8e").innerHTML = date8;
+
+        document.getElementById("chkpnts9a").innerHTML = cleanPadding(data[1][9]);
+        document.getElementById("chkpnts9b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][9]));
+        document.getElementById("chkpnts9c").innerHTML = cleanPadding(data[3][9]);
+        document.getElementById("chkpnts9d").innerHTML = cleanPadding(data[4][9]);
+        document.getElementById("chkpnts9e").innerHTML = date9;
+
+        document.getElementById("chkpnts10a").innerHTML = cleanPadding(data[1][10]);
+        document.getElementById("chkpnts10b").innerHTML = web3.utils.toAscii(cleanPadding(data[2][10]));
+        document.getElementById("chkpnts10c").innerHTML = cleanPadding(data[3][10]);
+        document.getElementById("chkpnts10d").innerHTML = cleanPadding(data[4][10]);
+        document.getElementById("chkpnts10e").innerHTML = date10;
+          
+      });
+    }
+
+    async function getHandler() {
+      var tuid = document.getElementById('handadd').value;
+  
+      supplyChain.methods.getHandler(tuid).call().then(function(data) {
+
+        str = '<div class="table-responsive"><table class="table table-bordered"><thead><tr><th>Handler Address</th><th>Name</th><th>Address</th></tr></thead><tbody>';
+				str = str + '<tr><td>'+ tuid + '</td>' +'<td>'+web3.utils.toAscii(data[0]) + '</td>' + '<td>'+web3.utils.toAscii(data[1])+'</td></tr>';
+				str = str + '</tbody></table></div>';
+				document.getElementById("gethandinfo").innerHTML = str;
+
+      });
+    }
+  
+    async function getAllHandlers() {
+  
+      supplyChain.methods.getAllHandlers().call().then(function(data) {
+        console.log("data: ", data);
+        console.log("Total no.of Holders ", data[0].length);
+
+        numOfHandlers = data[0].length;
+
+        str = '<div class="table-responsive"><table class="table table-bordered"><thead><tr><th>#</th><th>Handler Address</th><th>Name</th><th>Address</th></tr></thead><tbody>';
+          console.log(data);
+          for(let i = 0; i < numOfHandlers; i++) {
+					let tmpJSON = web3.utils.toAscii(cleanPadding(data[2][i]));
+					str = str + '<tr><td>'+ String(i+1) + '</td>' + '<td>' + data[0][i] + '</td>' +'<td>'+web3.utils.toAscii((data[1][i])) + '</td>' + '<td>'+web3.utils.toAscii((data[2][i]))+'</td></tr>';
+
+				}
+				str = str + '</tbody></table></div>';
+				document.getElementById("getallhandinfo").innerHTML = str;
+  
+      });
+    }
+  
+    async function getAllProducts() {
+      supplyChain.methods.getAllProducts().call().then(function(data) {
+        console.log("data: ", data);
+        console.log("Total no.of Products ", data[0].length);
+  
+        numOfProducts = data[0].length;
+
+        str = '<div class="table-responsive"><table class="table table-bordered"><thead><tr><th>#</th><th>Product Unique ID</th><th>Product Name</th><th>Number of Actions</th></tr></thead><tbody>';
+  
+        for(let i = 0; i < numOfProducts; i++) {
+          let tmpJSON = JSON.parse(web3.utils.toAscii(cleanPadding(data[0][i])));
+          str = str + '<tr><td>'+ String(i+1) + '</td>' + '<td>' + web3.utils.toAscii(data[0][i]) + '</td>' +'<td>' + web3.utils.toAscii(data[1][i]) + '</td>' + '<td>'+ data[2][i] +'</td></tr>';
+        }
+
+        str = str + '</tbody></table></div>';
+				document.getElementById("getallprodinfo").innerHTML = str;
+ 
+      });
+    } 
+
+  function cleanPadding(bstr) {
+	let len = bstr.length;
+	let i = len;
+	// Count amount of zeroes
+	while (i >= 1) {
+		if(bstr[i-1] != '0') {
+			break;
+		}
+		i--;
+	}
+	return(bstr.substring(0,i));
+}
+
+  </script>
+
+</body>
+</html>
