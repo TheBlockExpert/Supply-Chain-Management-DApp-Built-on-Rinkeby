@@ -1,3 +1,5 @@
+![haitu](https://user-images.githubusercontent.com/41378186/53953240-d7e9c680-40f8-11e9-9550-4804fd1c1049.png)
+
 # Supply-Chain-Management-DApp-Built-on-Rinkeby
 Objective of this Project is build a Simple Supplychain Management DApp; Built on Rinkeby Testnet
 
