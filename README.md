@@ -3,7 +3,8 @@
 # Supply-Chain-Management-DApp-Built-on-Rinkeby
 Objective of this Project is build a Simple Supplychain Management DApp; Built on Rinkeby Testnet
 
-Demo: http://dapp.haitwik.com/SupplyChainManagement/ <br>
+## Demo
+http://dapp.haitwik.com/dapps/SupplyChainManagement/ <br>
 Make sure you are connected to Rinkeby Testnet in MetaMask
 
 ## Process to Execute:
